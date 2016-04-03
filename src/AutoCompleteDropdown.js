@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import './AutoCompleteDropdown.scss';
+// import './AutoCompleteDropdown.scss';
 
 // To be able to close the dropdown on tap anywhere except the dropdown/input box/autocomplete list,
 // we have added an event listener in componentDidMount which works on the basis of className 'autocomplete' so DO NOT CHANGE CLASS NAME
@@ -11,6 +11,8 @@ export default class AutoCompleteDropdown extends Component {
     this.state = {
       list: this.props.recipientList,
       showList: false,
+      nodeList: [],
+      blah: null,
       selectedValue: null,
       selectedMsisdn: null,
       isDisabled: true
@@ -20,10 +22,31 @@ export default class AutoCompleteDropdown extends Component {
   componentDidMount() {
     this.comboBoxEventListener = ::this.handleComboBoxClick;
     document.addEventListener('click', this.comboBoxEventListener);
+    this.generateList();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.list.length !== prevState.list.length) {
+      this.generateList();
+    }
   }
 
   componentWillUnmount() {
     document.removeEventListener('click', this.comboBoxEventListener);
+  }
+
+  generateList() {
+    const nodeList = [];
+    if (this.state.list) {
+      this.state.list.map((item, index) => {
+        nodeList.push(
+          <li className="autocomplete-dropdown--list--item" key={index} onClick={() => { this.listItemClicked(item); return; }} dangerouslySetInnerHTML={{__html: this.highlightItem(item.msisdn.toString()) + '  (' + this.highlightItem(item.name) + ')'}}></li>
+        );
+      });
+    }
+    this.setState({
+      nodeList: nodeList
+    });
   }
 
   handleComboBoxClick(evt) {
@@ -97,6 +120,7 @@ export default class AutoCompleteDropdown extends Component {
     this.setState({
       list: newList
     });
+    this.generateList();
   }
 
   returnCorrectCaseFormat(searchedString, listItem) {
@@ -120,14 +144,7 @@ export default class AutoCompleteDropdown extends Component {
 
   render() {
     const showList = this.state.showList;
-    const nodeList = [];
-    if (this.state.list) {
-      this.state.list.map((item, index) => {
-        nodeList.push(
-          <li className="autocomplete-dropdown--list--item" key={index} onClick={() => { this.listItemClicked(item); return; }} dangerouslySetInnerHTML={{__html: this.highlightItem(item.msisdn.toString()) + '  (' + this.highlightItem(item.name) + ')'}}></li>
-        );
-      });
-    }
+    const nodeList = this.state.nodeList;
     const dropdownIconClass = 'autocomplete-dropdown__icon--' + ((showList) ? 'open' : 'closed');
     return (
       <div>
