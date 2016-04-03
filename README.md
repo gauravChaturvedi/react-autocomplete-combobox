@@ -1,4 +1,4 @@
-react-autocomplete-dropwodn
+react-autocomplete-dropdown
 =====================
 
 ### Usage
