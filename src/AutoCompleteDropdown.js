@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-// import './AutoCompleteDropdown.scss';
+import './AutoCompleteDropdown.scss';
 
 // To be able to close the dropdown on tap anywhere except the dropdown/input box/autocomplete list,
 // we have added an event listener in componentDidMount which works on the basis of className 'autocomplete' so DO NOT CHANGE CLASS NAME
@@ -136,7 +136,7 @@ export default class AutoCompleteDropdown extends Component {
     const searchedString = inputRef && inputRef.value;
     if (searchedString && searchedString.length > 0) {
       const regEx = new RegExp(searchedString, 'ig');
-      return option.replace(regEx, '<span style="color: #CCC; font-weight: 800;">' + this.returnCorrectCaseFormat(searchedString, option) + '</span>');
+      return option.replace(regEx, '<span class="myStyle">' + this.returnCorrectCaseFormat(searchedString, option) + '</span>');
     } else {
       return option;
     }
