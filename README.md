@@ -17,7 +17,6 @@ npm run lint
 * Allow user to specify which keys to search over and which ones not to. If User says “All” allow, search over all keys of the object      otherwise only the specified ones
 * Figure out a way how to give the user the output
 * Style it
-* Make highlight color configurable
 
 
 ### Dependencies
