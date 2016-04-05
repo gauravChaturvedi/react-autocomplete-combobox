@@ -39,7 +39,7 @@ export default class AutoCompleteDropdown extends Component {
     if (this.state.list) {
       this.state.list.map((item, index) => {
         nodeList.push(
-          <li className="autocomplete-dropdown--list--item" key={index} onClick={() => { this.listItemClicked(item); return; }} dangerouslySetInnerHTML={{__html: this.highlightItem(item.msisdn.toString()) + '  (' + this.highlightItem(item.name) + ')'}}></li>
+          <li className="autocomplete-dropdown--list--item" key={index} onClick={() => { this.listItemClicked(item); return; }} dangerouslySetInnerHTML={{__html: this.highlightItem(item.number.toString()) + '  (' + this.highlightItem(item.name) + ')'}}></li>
         );
       });
     }
@@ -109,7 +109,7 @@ export default class AutoCompleteDropdown extends Component {
     if (value.length > 0) {
       const filteredList = [];
       this.props.list.map((object) => {
-        if (((object.name.toLowerCase()).indexOf(value.toLowerCase()) > -1) || ((object.msisdn.toString()).indexOf(value) > -1)) {
+        if (((object.name.toLowerCase()).indexOf(value.toLowerCase()) > -1) || ((object.number.toString()).indexOf(value) > -1)) {
           filteredList.push(object);
         }
       });

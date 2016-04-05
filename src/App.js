@@ -4,15 +4,15 @@ import AutoCompleteDropdown from './AutoCompleteDropdown.js';
 const dummyArray = [
   {
     name: 'C3PO',
-    msisdn: 123456789
+    number: 123456789
   },
   {
     name: 'BB8',
-    msisdn: 123456789
+    number: 123456789
   },
   {
     name: 'R2D2',
-    msisdn: 987654321
+    number: 987654321
   }
 ];
 
