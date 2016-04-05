@@ -9,12 +9,11 @@ export default class AutoCompleteDropdown extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: this.props.recipientList,
+      list: this.props.list,
       showList: false,
       nodeList: [],
       blah: null,
       selectedValue: null,
-      selectedMsisdn: null,
       isDisabled: true
     };
   }
@@ -59,8 +58,8 @@ export default class AutoCompleteDropdown extends Component {
   }
 
   dropdownIconClicked() {
-    if (this.props.recipientList && this.props.recipientList.length > 0) {
-      const inputRef = ReactDOM.findDOMNode(this.refs.giftRecipientInput);
+    if (this.props.list && this.props.list.length > 0) {
+      const inputRef = ReactDOM.findDOMNode(this.refs.autocompleteDropdownInput);
       this.filterList(inputRef.value);
       this.setState({
         showList: !this.state.showList
@@ -69,8 +68,8 @@ export default class AutoCompleteDropdown extends Component {
   }
 
   onFocus() {
-    if (this.props.recipientList && this.props.recipientList.length > 0) {
-      const inputRef = ReactDOM.findDOMNode(this.refs.giftRecipientInput);
+    if (this.props.list && this.props.list.length > 0) {
+      const inputRef = ReactDOM.findDOMNode(this.refs.autocompleteDropdownInput);
       this.filterList(inputRef.value);
       this.setState({
         showList: true
@@ -79,8 +78,8 @@ export default class AutoCompleteDropdown extends Component {
   }
 
   onChange() {
-    if (this.props.recipientList && this.props.recipientList.length > 0) {
-      const inputRef = ReactDOM.findDOMNode(this.refs.giftRecipientInput);
+    if (this.props.list && this.props.list.length > 0) {
+      const inputRef = ReactDOM.findDOMNode(this.refs.autocompleteDropdownInput);
       const searchedString = inputRef && inputRef.value;
       if (searchedString && searchedString.length > 0) {
         this.setState({
@@ -96,21 +95,20 @@ export default class AutoCompleteDropdown extends Component {
   }
 
   listItemClicked(item) {
-    const inputRef = ReactDOM.findDOMNode(this.refs.giftRecipientInput);
+    const inputRef = ReactDOM.findDOMNode(this.refs.autocompleteDropdownInput);
     inputRef.value = item.name;
     this.setState({
       showList: false,
       selectedValue: item.name,
-      selectedMsisdn: item.msisdn,
       isDisabled: false
     });
   }
 
   filterList(value) {
-    let newList = this.props.recipientList;
+    let newList = this.props.list;
     if (value.length > 0) {
       const filteredList = [];
-      this.props.recipientList.map((object) => {
+      this.props.list.map((object) => {
         if (((object.name.toLowerCase()).indexOf(value.toLowerCase()) > -1) || ((object.msisdn.toString()).indexOf(value) > -1)) {
           filteredList.push(object);
         }
@@ -132,7 +130,7 @@ export default class AutoCompleteDropdown extends Component {
 
   // Used to highlight and bold the matched query in the display
   highlightItem(option) {
-    const inputRef = ReactDOM.findDOMNode(this.refs.giftRecipientInput);
+    const inputRef = ReactDOM.findDOMNode(this.refs.autocompleteDropdownInput);
     const searchedString = inputRef && inputRef.value;
     if (searchedString && searchedString.length > 0) {
       const regEx = new RegExp(searchedString, 'ig');
@@ -150,7 +148,7 @@ export default class AutoCompleteDropdown extends Component {
       <div>
         <span className={dropdownIconClass} onClick={::this.dropdownIconClicked}></span>
         <div className="autocomplete-dropdown__select">
-          <input ref="giftRecipientInput" className="autocomplete-dropdown--input" onChange={::this.onChange} onFocus={::this.onFocus} />
+          <input ref="autocompleteDropdownInput" className="autocomplete-dropdown--input" onChange={::this.onChange} onFocus={::this.onFocus} />
           {(showList) ? <ol className="autocomplete-dropdown--list">
             {nodeList}</ol> : null}
         </div>
