@@ -5,13 +5,7 @@ react-autocomplete-dropdown
 
 ```
 npm install
-npm start
-open http://localhost:3000
 ```
-```
-npm run lint
-```
-
 ### TODO
 * Make the list that it takes dynamic — many keys can be put in and allow the user to specify which is the main key
 * Allow user to specify which keys to search over and which ones not to. If User says “All” allow, search over all keys of the object      otherwise only the specified ones
