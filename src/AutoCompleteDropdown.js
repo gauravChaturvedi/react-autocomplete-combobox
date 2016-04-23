@@ -12,8 +12,7 @@ export default class AutoCompleteDropdown extends Component {
       list: this.props.list,
       showList: false,
       nodeList: [],
-      blah: null,
-      selectedValue: null,
+      selectedValue: '',
       isDisabled: true
     };
   }
@@ -39,7 +38,9 @@ export default class AutoCompleteDropdown extends Component {
     if (this.state.list) {
       this.state.list.map((item, index) => {
         nodeList.push(
-          <li className="autocomplete-dropdown--list--item" key={index} onClick={() => { this.listItemClicked(item); return; }} dangerouslySetInnerHTML={{__html: this.highlightItem(item.number.toString()) + '  (' + this.highlightItem(item.name) + ')'}}></li>
+          <li className="autocomplete-dropdown--list--item" key={index} onClick={() => {
+          this.listItemClicked(item); return; }
+          } dangerouslySetInnerHTML={{__html: this.highlightItem((item[this.props.searchKey]).toString())}}></li>
         );
       });
     }
@@ -83,7 +84,8 @@ export default class AutoCompleteDropdown extends Component {
       const searchedString = inputRef && inputRef.value;
       if (searchedString && searchedString.length > 0) {
         this.setState({
-          isDisabled: false
+          isDisabled: false,
+          selectedValue: searchedString
         });
       } else {
         this.setState({
@@ -96,10 +98,10 @@ export default class AutoCompleteDropdown extends Component {
 
   listItemClicked(item) {
     const inputRef = ReactDOM.findDOMNode(this.refs.autocompleteDropdownInput);
-    inputRef.value = item.name;
+    inputRef.value = item[this.props.searchKey];
     this.setState({
       showList: false,
-      selectedValue: item.name,
+      selectedValue: item,
       isDisabled: false
     });
   }
@@ -109,7 +111,7 @@ export default class AutoCompleteDropdown extends Component {
     if (value.length > 0) {
       const filteredList = [];
       this.props.list.map((object) => {
-        if (((object.name.toLowerCase()).indexOf(value.toLowerCase()) > -1) || ((object.number.toString()).indexOf(value) > -1)) {
+        if (((object[this.props.searchKey].toString()).indexOf(value) > -1)) {
           filteredList.push(object);
         }
       });

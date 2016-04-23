@@ -20,7 +20,7 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        <AutoCompleteDropdown list={dummyArray} />
+        <AutoCompleteDropdown list={dummyArray} searchKey="number" />
       </div>
     );
   }
